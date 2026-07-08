@@ -214,6 +214,49 @@
       border: 1px solid var(--line);
       background: #fbfcfc;
     }
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: 14px 0;
+    }
+    label {
+      display: grid;
+      gap: 6px;
+      font-weight: 700;
+      color: #26343b;
+    }
+    input, select, textarea {
+      width: 100%;
+      min-height: 38px;
+      border: 1px solid var(--line);
+      padding: 8px 10px;
+      font: inherit;
+      color: var(--ink);
+      background: #fff;
+    }
+    textarea { min-height: 92px; resize: vertical; }
+    .score-board {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+      margin: 14px 0;
+    }
+    .score-box {
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: #eef4f3;
+      font-weight: 800;
+    }
+    .source-pill {
+      display: inline-block;
+      padding: 2px 7px;
+      border: 1px solid #cdd7dd;
+      background: #f4f7f8;
+      color: #495761;
+      font-size: 12px;
+      font-weight: 700;
+    }
     footer {
       width: min(1180px, calc(100% - 40px));
       margin: 0 auto 40px;
@@ -224,7 +267,7 @@
       header { min-height: 78vh; }
       main, .hero, footer { width: min(100% - 24px, 1180px); }
       section { padding: 18px; }
-      .grid, .week-grid, .checklist, .shoe-type { grid-template-columns: 1fr; }
+      .grid, .week-grid, .checklist, .shoe-type, .field-grid, .score-board { grid-template-columns: 1fr; }
       .diagram-wrap img { min-width: 760px; }
     }
   </style>
@@ -239,6 +282,8 @@
         <a class="button" href="#exploded">查看爆炸图</a>
         <a class="button secondary" href="#anatomy">通用结构</a>
         <a class="button secondary" href="#terms">术语词典</a>
+        <a class="button secondary" href="#real-bom">真实 BOM</a>
+        <a class="button secondary" href="#practice">交互练习</a>
         <a class="button secondary" href="#plan">4周计划</a>
       </nav>
     </div>
@@ -457,6 +502,71 @@
       </div>
     </section>
 
+    <section id="real-bom">
+      <h2>真实产品 BOM 样例</h2>
+      <p class="section-intro">以下三份不是品牌内部机密 BOM，而是“按真实开发 BOM 字段 + 公开产品资料”整理的训练样例。公开可证实字段来自品牌页面、零售页面或品牌新闻资料；内部料号、单耗、供应商、测试数值必须在真实开发中向工厂和材料商确认。</p>
+      <div class="note">字段说明：部件编号用于 tech pack 对图；材料规格写公开可见信息；工艺/测试是开发 BOM 中应追踪的项目；证据等级分为“公开证实”和“开发确认”。</div>
+
+      <h3>adidas Samba OG 公开资料 BOM 训练样例</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>部件编号</th><th>部位 / Component</th><th>材料规格</th><th>颜色/外观</th><th>工艺/结构</th><th>品控关注</th><th>证据等级</th></tr></thead>
+          <tbody>
+            <tr><td>SMB-01</td><td>前帮 / Vamp</td><td>Leather upper 皮革鞋面</td><td>核心白/黑等配色随 SKU 变化</td><td>裁断、针车、与侧片拼接</td><td>皮面色差、折痕、针距</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>SMB-02</td><td>鞋头 T 字盖片 / T-toe overlay</td><td>Suede overlays 麂皮覆盖片</td><td>常见灰/浅米色麂皮</td><td>裁断、边缘针车固定</td><td>绒面方向、掉色、边缘毛边</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>SMB-03</td><td>侧墙三条纹/侧片 / Quarter overlay</td><td>Leather/synthetic leather，按具体 SKU 确认</td><td>对比色条纹</td><td>贴合或车缝固定</td><td>对位、胶痕、缝线拉力</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>SMB-04</td><td>鞋眼片 / Eyestay</td><td>Leather upper matching material</td><td>同鞋面主色</td><td>冲孔、针车</td><td>鞋眼孔撕裂强度</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>SMB-05</td><td>鞋舌 / Tongue</td><td>Leather/synthetic leather，泡棉厚度需确认</td><td>同鞋面主色</td><td>鞋舌标、包边或折边</td><td>脚背压迫、标章牢度</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>SMB-06</td><td>内里 / Lining</td><td>Textile lining 纺织内里</td><td>浅色或配色内里</td><td>针车、后段套楦</td><td>摩擦色牢度、起毛、耐磨</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>SMB-07</td><td>鞋垫 / Sockliner</td><td>Textile-covered sockliner，具体泡棉未公开</td><td>品牌印刷随 SKU</td><td>模切、印刷、贴合</td><td>印刷耐磨、脚感厚度</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>SMB-08</td><td>中底/内部底层 / Internal bottom</td><td>低轮廓内部底层，具体材料未公开</td><td>不可见</td><td>Strobel 或板底结构需拆解确认</td><td>弯折、粘合</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>SMB-09</td><td>外底 / Outsole</td><td>Gum rubber outsole 胶色橡胶外底</td><td>半透明 gum 胶底</td><td>模压橡胶、冷粘/贴底</td><td>耐磨、止滑、黄变</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>SMB-10</td><td>鞋带 / Laces</td><td>Flat textile laces 扁平纺织鞋带</td><td>同色或对比色</td><td>织带切头、包胶头</td><td>拉力、色牢度</td><td><span class="source-pill">开发确认</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>New Balance 574 Core 公开资料 BOM 训练样例</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>部件编号</th><th>部位 / Component</th><th>材料规格</th><th>颜色/外观</th><th>工艺/结构</th><th>品控关注</th><th>证据等级</th></tr></thead>
+          <tbody>
+            <tr><td>NB574-01</td><td>前帮网布 / Vamp mesh</td><td>Mesh upper panel 网布鞋面片</td><td>灰、海军蓝等核心配色</td><td>裁断、针车拼接</td><td>透气孔一致性、起毛、色差</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>NB574-02</td><td>麂皮鞋头盖片 / Suede toe overlay</td><td>Suede overlays 麂皮覆盖片</td><td>同色系麂皮</td><td>裁断、针车</td><td>绒面方向、色牢度、边距</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>NB574-03</td><td>侧面覆盖片 / Quarter overlay</td><td>Suede and mesh upper 组合鞋面</td><td>复古多片拼接</td><td>多片针车拼接</td><td>对称性、线迹、片边翘起</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>NB574-04</td><td>N 标 / Side logo</td><td>Synthetic or leather applique，具体 SKU 确认</td><td>对比色 N 标</td><td>贴合、针车或热压</td><td>边缘牢度、位置对称</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>NB574-05</td><td>鞋舌 / Tongue</td><td>Textile/synthetic tongue with foam，具体厚度未公开</td><td>带织唛/标章</td><td>车缝、标章固定</td><td>标章位置、泡棉均匀</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>NB574-06</td><td>后跟支撑 / Heel counter area</td><td>Synthetic/suede heel overlay，内部硬度需确认</td><td>后跟拼色片</td><td>后跟成型、针车</td><td>后跟定型、跟口磨脚</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>NB574-07</td><td>内里 / Lining</td><td>Textile lining，具体成分未公开</td><td>浅色或深色内里</td><td>套里、针车</td><td>摩擦色牢度、耐磨</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>NB574-08</td><td>中底 / Midsole</td><td>Lightweight EVA foam cushioning 轻量 EVA 泡棉缓震</td><td>白/米白中底</td><td>压缩模压中底、贴合</td><td>硬度、压缩变形、尺寸稳定</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>NB574-09</td><td>ENCAP 稳定结构 / ENCAP midsole</td><td>ENCAP midsole cushioning combines soft foam with durable polyurethane rim</td><td>可见 PU rim 结构</td><td>中底组合成型</td><td>粘合、开胶、边墙外观</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>NB574-10</td><td>外底 / Outsole</td><td>Rubber outsole 橡胶外底</td><td>黑色或配色橡胶</td><td>橡胶模压、冷粘</td><td>耐磨、止滑、底纹毛边</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>NB574-11</td><td>鞋带 / Laces</td><td>Flat textile laces</td><td>同色系</td><td>织造、切头</td><td>拉力、起毛、色牢度</td><td><span class="source-pill">开发确认</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>PUMA Speedcat 公开资料 BOM 训练样例</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>部件编号</th><th>部位 / Component</th><th>材料规格</th><th>颜色/外观</th><th>工艺/结构</th><th>品控关注</th><th>证据等级</th></tr></thead>
+          <tbody>
+            <tr><td>PSC-01</td><td>鞋面主体 / Upper body</td><td>Suede upper 麂皮鞋面</td><td>红、黑、蓝等赛车风配色</td><td>低帮裁片、针车拼接</td><td>绒面方向、色牢度、油污</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>PSC-02</td><td>鞋头保护 / Toe bumper</td><td>Suede/synthetic reinforced toe，具体材料需确认</td><td>同鞋面或对比色</td><td>贴合、针车或包边</td><td>耐磨、对称性、边缘开胶</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>PSC-03</td><td>Formstrip 侧条 / Side formstrip</td><td>Leather/synthetic applique，具体 SKU 确认</td><td>白色或对比色侧条</td><td>裁断、贴合、针车</td><td>线迹、位置、边缘牢度</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>PSC-04</td><td>鞋眼片 / Eyestay</td><td>Suede upper matching material</td><td>同鞋面</td><td>冲孔、针车</td><td>撕裂强度、鞋带摩擦</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>PSC-05</td><td>鞋舌 / Tongue</td><td>Suede or textile-backed suede，具体结构需确认</td><td>同鞋面</td><td>薄型鞋舌、织唛固定</td><td>脚背压迫、标章牢度</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>PSC-06</td><td>鞋领内里 / Collar lining</td><td>Textile/synthetic lining，具体成分未公开</td><td>同色或黑色内里</td><td>低口包边、针车</td><td>磨脚、色迁移、耐磨</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>PSC-07</td><td>鞋垫 / Sockliner</td><td>Foam sockliner，具体泡棉未公开</td><td>品牌印刷</td><td>模切、印刷</td><td>印刷耐磨、脚感</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>PSC-08</td><td>低轮廓中底 / Low-profile midsole</td><td>Thin internal cushioning，具体材料未公开</td><td>薄底轮廓</td><td>贴底、低剖面结构</td><td>弯折、粘合强度</td><td><span class="source-pill">开发确认</span></td></tr>
+            <tr><td>PSC-09</td><td>外底 / Outsole</td><td>Rubber outsole 橡胶外底</td><td>低剖面黑/胶色底</td><td>薄型橡胶底、包边式视觉</td><td>耐磨、止滑、弯折</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>PSC-10</td><td>后跟/鞋底延伸 / Heel wrap</td><td>Rubber wrap / driving-inspired heel detail</td><td>赛车鞋后跟包覆感</td><td>外底后跟上翻或包覆结构</td><td>开胶、磨耗、弯折裂纹</td><td><span class="source-pill">公开证实</span></td></tr>
+            <tr><td>PSC-11</td><td>鞋带 / Laces</td><td>Flat textile laces</td><td>同色或对比色</td><td>织造、切头</td><td>拉力、色牢度</td><td><span class="source-pill">开发确认</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
     <section id="plan">
       <h2>4周速成计划</h2>
       <div class="week-grid">
@@ -519,6 +629,73 @@
       </div>
     </section>
 
+    <section id="practice">
+      <h2>可交互 BOM 练习模板</h2>
+      <p class="section-intro">选择一款鞋，按真实 BOM 字段填写一个部件。页面会根据字段完整度、证据等级和工艺/品控描述给出即时评分；可保存草稿并导出 CSV。</p>
+      <div class="field-grid">
+        <label>练习鞋型
+          <select id="practiceShoe">
+            <option value="adidas Samba OG">adidas Samba OG</option>
+            <option value="New Balance 574 Core">New Balance 574 Core</option>
+            <option value="PUMA Speedcat">PUMA Speedcat</option>
+          </select>
+        </label>
+        <label>部件编号
+          <input id="partNo" placeholder="例如 SMB-01 / NB574-08 / PSC-09">
+        </label>
+        <label>证据等级
+          <select id="evidenceLevel">
+            <option value="公开证实">公开证实</option>
+            <option value="开发确认">开发确认</option>
+            <option value="待拆解确认">待拆解确认</option>
+          </select>
+        </label>
+      </div>
+      <div class="field-grid">
+        <label>中文部位
+          <input id="componentCn" placeholder="例如 中底 / 外底 / 鞋眼片">
+        </label>
+        <label>English Component
+          <input id="componentEn" placeholder="Midsole / Outsole / Eyestay">
+        </label>
+        <label>材料规格
+          <input id="materialSpec" placeholder="例如 EVA foam / suede upper / rubber outsole">
+        </label>
+      </div>
+      <div class="field-grid">
+        <label>颜色/外观
+          <input id="colorSpec" placeholder="例如 gum rubber / grey suede / white leather">
+        </label>
+        <label>工艺/结构
+          <input id="processSpec" placeholder="例如 cutting + stitching + cold cement">
+        </label>
+        <label>品控关注
+          <input id="qcSpec" placeholder="例如 abrasion, bond strength, colour fastness">
+        </label>
+      </div>
+      <label>开发备注
+        <textarea id="devNotes" placeholder="写下哪些字段来自公开资料，哪些需要向工厂、材料商或拆解样确认。"></textarea>
+      </label>
+      <div class="score-board">
+        <div class="score-box">完整度：<span id="completeScore">0</span>%</div>
+        <div class="score-box">证据：<span id="evidenceScore">0</span>%</div>
+        <div class="score-box">工艺/品控：<span id="processScore">0</span>%</div>
+        <div class="score-box">总分：<span id="totalScore">0</span>%</div>
+      </div>
+      <div class="hero-actions">
+        <button class="button" type="button" id="savePractice">保存到练习表</button>
+        <button class="button secondary" type="button" id="clearPractice">清空输入</button>
+        <button class="button secondary" type="button" id="exportPractice">导出 CSV</button>
+      </div>
+      <h3>练习记录</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>鞋型</th><th>部件编号</th><th>部位</th><th>材料</th><th>工艺</th><th>品控</th><th>证据</th><th>总分</th></tr></thead>
+          <tbody id="practiceRows"></tbody>
+        </table>
+      </div>
+    </section>
+
     <section id="sources">
       <h2>公开资料来源</h2>
       <p class="section-intro">用于核对术语和测试/工艺方向。不同品牌和工厂可能有自己的叫法，实际开发以 tech pack、BOM 和供应商确认口径为准。</p>
@@ -532,6 +709,9 @@
         <li><a href="https://shoemakersacademy.com/cold-cement-vs-vulcanized-shoe-construction/">Shoemakers Academy: Cold Cement vs Vulcanized Shoe Construction</a></li>
         <li><a href="https://shoemakersacademy.com/outsole-cementing/">Shoemakers Academy: Outsole Cementing</a></li>
         <li><a href="https://amorimcorksolutions.com/en-us/materials-applications/footwear/knowledge-center/glossary/">Amorim Cork Solutions: Footwear Glossary</a></li>
+        <li><a href="https://www.adidas.com/us/samba-og-shoes/B75806.html">adidas: Samba OG Shoes B75806</a> / <a href="https://www.adidas.com/us/samba-og-shoes/B75807.html">B75807</a></li>
+        <li><a href="https://www.newbalance.com/pd/574-core/ML574V3-40377.html">New Balance: 574 Core Men's Lifestyle</a> / <a href="https://www.newbalance.com/pd/574-core/WL574V3-40378.html">574 Core Women's Lifestyle</a></li>
+        <li><a href="https://vn.puma.com/vn/en/pd/speedcat-og-sneakers-unisex/398846.html">PUMA: Speedcat OG Sneakers Unisex 398846</a></li>
       </ul>
     </section>
   </main>
@@ -539,5 +719,109 @@
   <footer>
     <p>生成日期：2026-07-07。图片为教学用途的无品牌渲染拆解图；术语以公开资料和鞋类开发通用表达整理。</p>
   </footer>
+  <script>
+    (function () {
+      var fields = ["practiceShoe", "partNo", "evidenceLevel", "componentCn", "componentEn", "materialSpec", "colorSpec", "processSpec", "qcSpec", "devNotes"];
+      var rowsKey = "sneakerBomPracticeRows";
+
+      function byId(id) { return document.getElementById(id); }
+      function value(id) { return (byId(id).value || "").trim(); }
+      function escapeCell(text) { return String(text || "").replace(/[&<>"']/g, function (m) { return ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[m]; }); }
+
+      function score() {
+        var required = ["partNo", "componentCn", "componentEn", "materialSpec", "colorSpec", "processSpec", "qcSpec"];
+        var filled = required.filter(function (id) { return value(id).length > 0; }).length;
+        var complete = Math.round(filled / required.length * 100);
+        var evidence = value("evidenceLevel") === "公开证实" ? 100 : value("evidenceLevel") === "开发确认" ? 70 : 45;
+        var processText = (value("processSpec") + " " + value("qcSpec")).toLowerCase();
+        var processHits = ["stitch", "cut", "cement", "bond", "abrasion", "colour", "color", "flex", "rubber", "eva", "suede", "leather"].filter(function (term) {
+          return processText.indexOf(term) >= 0;
+        }).length;
+        var process = Math.min(100, Math.round(processHits / 4 * 100));
+        var total = Math.round(complete * 0.5 + evidence * 0.2 + process * 0.3);
+        byId("completeScore").textContent = complete;
+        byId("evidenceScore").textContent = evidence;
+        byId("processScore").textContent = process;
+        byId("totalScore").textContent = total;
+        return total;
+      }
+
+      function readRows() {
+        try { return JSON.parse(localStorage.getItem(rowsKey) || "[]"); } catch (e) { return []; }
+      }
+
+      function writeRows(rows) {
+        localStorage.setItem(rowsKey, JSON.stringify(rows));
+      }
+
+      function renderRows() {
+        var rows = readRows();
+        byId("practiceRows").innerHTML = rows.map(function (row) {
+          return "<tr><td>" + escapeCell(row.shoe) + "</td><td>" + escapeCell(row.partNo) + "</td><td>" + escapeCell(row.componentCn + " / " + row.componentEn) + "</td><td>" + escapeCell(row.materialSpec) + "</td><td>" + escapeCell(row.processSpec) + "</td><td>" + escapeCell(row.qcSpec) + "</td><td>" + escapeCell(row.evidenceLevel) + "</td><td>" + escapeCell(row.totalScore) + "%</td></tr>";
+        }).join("");
+      }
+
+      function saveRow() {
+        var total = score();
+        var row = {
+          shoe: value("practiceShoe"),
+          partNo: value("partNo"),
+          evidenceLevel: value("evidenceLevel"),
+          componentCn: value("componentCn"),
+          componentEn: value("componentEn"),
+          materialSpec: value("materialSpec"),
+          colorSpec: value("colorSpec"),
+          processSpec: value("processSpec"),
+          qcSpec: value("qcSpec"),
+          devNotes: value("devNotes"),
+          totalScore: total
+        };
+        if (!row.partNo || !row.componentCn || !row.componentEn || !row.materialSpec) {
+          alert("请至少填写部件编号、中文部位、英文部位和材料规格。");
+          return;
+        }
+        var rows = readRows();
+        rows.push(row);
+        writeRows(rows);
+        renderRows();
+      }
+
+      function clearInputs() {
+        ["partNo", "componentCn", "componentEn", "materialSpec", "colorSpec", "processSpec", "qcSpec", "devNotes"].forEach(function (id) {
+          byId(id).value = "";
+        });
+        score();
+      }
+
+      function exportCsv() {
+        var rows = readRows();
+        var header = ["shoe", "partNo", "componentCn", "componentEn", "materialSpec", "colorSpec", "processSpec", "qcSpec", "evidenceLevel", "devNotes", "totalScore"];
+        var csv = [header.join(",")].concat(rows.map(function (row) {
+          return header.map(function (key) {
+            return '"' + String(row[key] || "").replace(/"/g, '""') + '"';
+          }).join(",");
+        })).join("\n");
+        var blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "sneaker-bom-practice.csv";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(url);
+      }
+
+      fields.forEach(function (id) {
+        var el = byId(id);
+        if (el) el.addEventListener("input", score);
+      });
+      byId("savePractice").addEventListener("click", saveRow);
+      byId("clearPractice").addEventListener("click", clearInputs);
+      byId("exportPractice").addEventListener("click", exportCsv);
+      score();
+      renderRows();
+    })();
+  </script>
 </body>
 </html>
