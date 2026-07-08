@@ -1,0 +1,543 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>运动鞋设计术语与结构拆解图解学习包</title>
+  <style>
+    :root {
+      --ink: #172026;
+      --muted: #62707a;
+      --line: #d8e0e5;
+      --panel: #f5f7f8;
+      --accent: #0f6b5f;
+      --accent-2: #b76e22;
+      --paper: #ffffff;
+      --shadow: 0 18px 45px rgba(23, 32, 38, .10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans SC", "Microsoft YaHei", Arial, sans-serif;
+      color: var(--ink);
+      background: #eef2f3;
+      line-height: 1.65;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    header {
+      min-height: 92vh;
+      display: grid;
+      align-items: end;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.84), rgba(238,242,243,.98)),
+        url("assets/retro-runner-exploded.png") center 18% / cover no-repeat;
+      border-bottom: 1px solid var(--line);
+    }
+    .hero {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 64px 0 56px;
+    }
+    .eyebrow {
+      display: inline-flex;
+      gap: 10px;
+      align-items: center;
+      padding: 6px 10px;
+      border: 1px solid rgba(15,107,95,.3);
+      color: var(--accent);
+      background: rgba(255,255,255,.72);
+      font-weight: 700;
+      font-size: 13px;
+    }
+    h1 {
+      margin: 18px 0 16px;
+      max-width: 980px;
+      font-size: clamp(38px, 6vw, 74px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+    .hero p {
+      max-width: 760px;
+      margin: 0 0 26px;
+      font-size: 20px;
+      color: #34424a;
+    }
+    .hero-actions, nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .button {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      padding: 9px 14px;
+      border: 1px solid var(--ink);
+      background: var(--ink);
+      color: #fff;
+      font-weight: 700;
+    }
+    .button.secondary {
+      background: rgba(255,255,255,.82);
+      color: var(--ink);
+      border-color: var(--line);
+    }
+    main {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 34px 0 72px;
+    }
+    section {
+      margin: 0 0 34px;
+      padding: 28px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(26px, 3vw, 38px);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+    h3 {
+      margin: 24px 0 10px;
+      font-size: 22px;
+      letter-spacing: 0;
+    }
+    .section-intro {
+      margin: -8px 0 20px;
+      max-width: 860px;
+      color: var(--muted);
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+    .tile {
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+    }
+    .tile strong { display: block; margin-bottom: 4px; }
+    .diagram-wrap {
+      border: 1px solid var(--line);
+      background: #fff;
+      overflow: auto;
+    }
+    .diagram-wrap img {
+      display: block;
+      width: 100%;
+      min-width: 980px;
+      height: auto;
+    }
+    .shoe-type {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(330px, .85fr);
+      gap: 18px;
+      align-items: start;
+      margin-top: 20px;
+      padding-top: 22px;
+      border-top: 1px solid var(--line);
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      background: #fff;
+    }
+    th, td {
+      padding: 10px 11px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      text-align: left;
+    }
+    th {
+      background: #eef4f3;
+      color: #26343b;
+      font-weight: 800;
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+    .table-scroll {
+      max-height: 620px;
+      overflow: auto;
+      border: 1px solid var(--line);
+    }
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      margin: 0 5px 5px 0;
+      background: #e8f2f0;
+      color: #0f5c52;
+      border: 1px solid #c8dfdb;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .note {
+      padding: 14px 16px;
+      background: #fff7eb;
+      border-left: 4px solid var(--accent-2);
+      color: #54330d;
+      margin: 16px 0;
+    }
+    .svg-panel {
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: #fbfcfc;
+      overflow: auto;
+    }
+    svg { max-width: 100%; min-width: 860px; height: auto; }
+    .week-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+    .week {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      padding: 16px;
+    }
+    .week h3 { margin-top: 0; }
+    .checklist {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+    .check {
+      padding: 12px 14px;
+      border: 1px solid var(--line);
+      background: #fbfcfc;
+    }
+    footer {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto 40px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @media (max-width: 920px) {
+      header { min-height: 78vh; }
+      main, .hero, footer { width: min(100% - 24px, 1180px); }
+      section { padding: 18px; }
+      .grid, .week-grid, .checklist, .shoe-type { grid-template-columns: 1fr; }
+      .diagram-wrap img { min-width: 760px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="hero">
+      <div class="eyebrow">Sneaker Design Vocabulary · 4 Week Sprint</div>
+      <h1>运动鞋设计术语与结构拆解图解学习包</h1>
+      <p>围绕鞋体结构、面辅料、制造工艺、性能品控和开发沟通建立系统知识。重点加入德训鞋、复古跑鞋、薄底赛车鞋三款真实风格爆炸拆解图。</p>
+      <nav class="hero-actions" aria-label="页面导航">
+        <a class="button" href="#exploded">查看爆炸图</a>
+        <a class="button secondary" href="#anatomy">通用结构</a>
+        <a class="button secondary" href="#terms">术语词典</a>
+        <a class="button secondary" href="#plan">4周计划</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section id="overview">
+      <h2>学习逻辑</h2>
+      <p class="section-intro">不要把运动鞋设计理解成孤立词汇。更有效的顺序是：先识别部位，再判断材料，再理解工艺，最后用性能和成本语言解释为什么这样设计。</p>
+      <div class="grid">
+        <div class="tile"><strong>1. 结构 / Anatomy</strong>先把鞋拆成鞋面、内部、底部和辅件，能说清每个零件的位置与功能。</div>
+        <div class="tile"><strong>2. 材料 / Materials</strong>用外观、触感、性能、成本倾向描述 mesh、suede、TPU、EVA、rubber 等材料。</div>
+        <div class="tile"><strong>3. 工艺 / Process</strong>理解裁断、针车、热贴、楦制、冷粘、硫化、注塑等如何把材料变成鞋。</div>
+      </div>
+      <div class="note">图中鞋款均为无品牌、教学用途的通用鞋型渲染，不代表任何品牌原版结构。零件名称参考公开鞋类资料并结合运动鞋开发常用表达整理。</div>
+    </section>
+
+    <section id="exploded">
+      <h2>三款重点鞋型爆炸拆解图</h2>
+      <p class="section-intro">每款鞋图内都有中英文编号标注，右侧表格补充功能和设计判断。图片可横向滚动查看细节。</p>
+
+      <article class="shoe-type" id="gat">
+        <div>
+          <h3>德训鞋 / German Army Trainer Style</h3>
+          <div class="diagram-wrap">
+            <img src="assets/gat-exploded.png" alt="德训鞋 German Army Trainer style exploded view with bilingual parts labels">
+          </div>
+        </div>
+        <div>
+          <h3>零件索引</h3>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>#</th><th>中文 / English</th><th>功能</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>白色皮革鞋面 / White Leather Vamp</td><td>形成前帮主体，提供复古德训鞋干净的皮革面感。</td></tr>
+                <tr><td>2</td><td>麂皮鞋头盖片 / Suede Toe Overlay</td><td>保护鞋头并形成德训鞋典型 T 字鞋头视觉。</td></tr>
+                <tr><td>3</td><td>麂皮挡泥片 / Suede Mudguard</td><td>环绕前掌下缘，增加耐磨和层次。</td></tr>
+                <tr><td>4</td><td>皮革侧片 / Leather Quarter Panels</td><td>包裹中后足，支撑鞋带受力区。</td></tr>
+                <tr><td>5</td><td>皮革鞋眼片 / Leather Eyestay</td><td>承载鞋带孔，分散系带拉力。</td></tr>
+                <tr><td>6</td><td>皮革鞋舌 / Leather Tongue</td><td>保护脚背，改善鞋带压迫。</td></tr>
+                <tr><td>7</td><td>内里领口 / Padded Collar Lining</td><td>接触脚踝，提升舒适和后跟包裹。</td></tr>
+                <tr><td>8</td><td>后跟硬包 / Heel Counter</td><td>稳定后跟，维持鞋型。</td></tr>
+                <tr><td>9</td><td>扁平鞋带 / Flat Laces</td><td>调节包裹，符合复古低帮鞋视觉。</td></tr>
+                <tr><td>10</td><td>鞋垫 / Sockliner</td><td>脚直接踩踏的舒适层。</td></tr>
+                <tr><td>11</td><td>中底板 / Strobel Board</td><td>连接鞋面底部，形成内部底层。</td></tr>
+                <tr><td>12</td><td>EVA 中底 / EVA Midsole Wedge</td><td>薄型缓震层，保持低轮廓。</td></tr>
+                <tr><td>13</td><td>橡胶大底 / Gum Rubber Outsole</td><td>接地、耐磨、提供复古胶底质感。</td></tr>
+                <tr><td>14</td><td>大底花纹 / Outsole Tread</td><td>提供抓地，并强化胶底识别度。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <article class="shoe-type" id="retro-runner">
+        <div>
+          <h3>复古跑鞋 / Retro Running Shoe</h3>
+          <div class="diagram-wrap">
+            <img src="assets/retro-runner-exploded.png" alt="复古跑鞋 retro running shoe exploded view with bilingual parts labels">
+          </div>
+        </div>
+        <div>
+          <h3>零件索引</h3>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>#</th><th>中文 / English</th><th>功能</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>尼龙/网布鞋面 / Nylon-Mesh Vamp</td><td>轻量透气，是 70s-90s 跑鞋常见基础面料。</td></tr>
+                <tr><td>2</td><td>麂皮鞋头盖片 / Suede Toe Cap</td><td>提高鞋头耐磨，形成复古层次。</td></tr>
+                <tr><td>3</td><td>麂皮挡泥片 / Suede Mudguard</td><td>保护前掌下缘，减少脏污和磨损。</td></tr>
+                <tr><td>4</td><td>麂皮侧面覆盖片 / Suede Quarter Overlay</td><td>支撑中足并形成侧墙视觉。</td></tr>
+                <tr><td>5</td><td>合成革鞋眼片 / Synthetic Leather Eyestay</td><td>稳定鞋带区，减少网布被拉裂。</td></tr>
+                <tr><td>6</td><td>加厚鞋舌 / Padded Tongue</td><td>增加脚背舒适和复古厚实感。</td></tr>
+                <tr><td>7</td><td>鞋领泡棉 / Collar Foam</td><td>改善脚踝舒适和后跟锁定。</td></tr>
+                <tr><td>8</td><td>后跟提拉片 / Heel Tab</td><td>方便穿脱，也可作为后跟装饰片。</td></tr>
+                <tr><td>9</td><td>后跟硬包 / Heel Counter</td><td>提供后跟稳定和鞋型支撑。</td></tr>
+                <tr><td>10</td><td>扁平织带鞋带 / Flat Woven Laces</td><td>调节包裹，匹配复古跑鞋风格。</td></tr>
+                <tr><td>11</td><td>鞋垫 / Sockliner</td><td>贴脚舒适层，可承载品牌和尺码信息。</td></tr>
+                <tr><td>12</td><td>中底布板 / Strobel Board</td><td>连接鞋面底部，提供装配基础。</td></tr>
+                <tr><td>13</td><td>EVA 中底 / EVA Wedge Midsole</td><td>轻量缓震，楔形中底是复古跑鞋常见轮廓。</td></tr>
+                <tr><td>14</td><td>中底稳定片 / Stabilizing Shank</td><td>增强中腰抗扭和步态稳定。</td></tr>
+                <tr><td>15</td><td>橡胶华夫底 / Rubber Waffle Outsole</td><td>提供耐磨和经典颗粒抓地。</td></tr>
+                <tr><td>16</td><td>外底耐磨块 / Outsole Tread Blocks</td><td>提升抓地和耐磨，尤其适合复古跑步语汇。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+
+      <article class="shoe-type" id="racing-flat">
+        <div>
+          <h3>薄底赛车鞋 / Thin-Soled Racing Flat</h3>
+          <div class="diagram-wrap">
+            <img src="assets/racing-flat-exploded.png" alt="薄底赛车鞋 racing flat exploded view with bilingual parts labels">
+          </div>
+        </div>
+        <div>
+          <h3>零件索引</h3>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>#</th><th>中文 / English</th><th>功能</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>工程网布鞋面 / Engineered Mesh Upper</td><td>轻量透气，减少竞速鞋上脚负担。</td></tr>
+                <tr><td>2</td><td>热压鞋头防护片 / Welded Toe Bumper</td><td>轻薄补强，避免传统车缝增加重量。</td></tr>
+                <tr><td>3</td><td>超纤鞋带孔片 / Microfiber Eyestay</td><td>增强鞋带区耐拉强度。</td></tr>
+                <tr><td>4</td><td>薄型风琴舌 / Thin Gusseted Tongue</td><td>减轻重量，减少鞋舌跑偏。</td></tr>
+                <tr><td>5</td><td>轻量领口内衬 / Minimal Collar Lining</td><td>在低重量下保留基础舒适。</td></tr>
+                <tr><td>6</td><td>内置后跟包片 / Internal Heel Counter</td><td>用较轻结构稳定后跟。</td></tr>
+                <tr><td>7</td><td>扁平竞速鞋带 / Flat Racing Laces</td><td>提供快速、稳定的锁定。</td></tr>
+                <tr><td>8</td><td>打孔鞋垫 / Perforated Sockliner</td><td>减重、透气，并提供贴脚缓冲。</td></tr>
+                <tr><td>9</td><td>中底布 / Strobel Board</td><td>连接鞋面底部，是薄底鞋内部基础层。</td></tr>
+                <tr><td>10</td><td>轻量中底 / Responsive EVA-PEBA Midsole</td><td>薄型缓震，保留地面感和快速过渡。</td></tr>
+                <tr><td>11</td><td>前掌 flex 切槽 / Forefoot Flex Grooves</td><td>提升前掌弯折灵活性。</td></tr>
+                <tr><td>12</td><td>后跟橡胶片 / Heel Rubber Patch</td><td>只在磨耗区加橡胶，控制重量。</td></tr>
+                <tr><td>13</td><td>前掌橡胶片 / Forefoot Rubber Patch</td><td>提供蹬伸抓地和耐磨。</td></tr>
+                <tr><td>14</td><td>轻量抓地纹理 / Lightweight Traction Texture</td><td>增强接地摩擦，避免完整厚外底增重。</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="anatomy">
+      <h2>通用运动鞋结构图解</h2>
+      <p class="section-intro">这张简图用于建立结构坐标。看任何鞋时都先按鞋面、内部、底部、辅件四层理解。</p>
+      <div class="svg-panel">
+        <svg viewBox="0 0 1100 560" role="img" aria-label="通用运动鞋结构标注图">
+          <defs>
+            <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L9,3 z" fill="#172026"></path>
+            </marker>
+          </defs>
+          <rect x="0" y="0" width="1100" height="560" fill="#fbfcfc"></rect>
+          <path d="M180 310 C250 210, 390 190, 520 215 C620 235, 670 300, 775 310 C855 318, 910 330, 940 360 C835 404, 640 420, 425 410 C295 404, 190 380, 135 350 C132 335, 145 320, 180 310 Z" fill="#f7faf9" stroke="#172026" stroke-width="4"></path>
+          <path d="M230 310 C300 255, 370 240, 470 252 C445 305, 384 332, 260 332 Z" fill="#dfe8e5" stroke="#172026" stroke-width="3"></path>
+          <path d="M480 250 C580 250, 660 290, 742 313 C648 333, 565 342, 487 332 Z" fill="#eef3f1" stroke="#172026" stroke-width="3"></path>
+          <path d="M670 257 C720 230, 782 230, 810 310 C762 308, 718 295, 670 257 Z" fill="#e5ece9" stroke="#172026" stroke-width="3"></path>
+          <path d="M410 245 L565 235 L625 318 L475 330 Z" fill="#fff" stroke="#172026" stroke-width="3"></path>
+          <path d="M430 228 C455 180, 530 170, 570 225" fill="none" stroke="#172026" stroke-width="3"></path>
+          <path d="M565 240 C605 218, 660 224, 705 255" fill="none" stroke="#172026" stroke-width="3"></path>
+          <circle cx="450" cy="265" r="6" fill="#172026"></circle><circle cx="490" cy="260" r="6" fill="#172026"></circle><circle cx="530" cy="260" r="6" fill="#172026"></circle><circle cx="570" cy="268" r="6" fill="#172026"></circle>
+          <path d="M155 360 C330 405, 720 420, 945 365 L970 390 C785 455, 300 455, 120 385 Z" fill="#f2eadf" stroke="#172026" stroke-width="4"></path>
+          <path d="M115 386 C310 455, 780 468, 978 394 L1000 430 C772 500, 300 493, 98 420 Z" fill="#24282b" stroke="#172026" stroke-width="4"></path>
+          <path d="M190 425 L240 450 M300 438 L350 465 M420 446 L470 472 M540 450 L590 474 M660 448 L710 470 M780 436 L835 456" stroke="#fff" stroke-width="5"></path>
+
+          <g font-family="Arial, sans-serif" font-size="18" fill="#172026">
+            <line x1="260" y1="230" x2="130" y2="135" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="30" y="122" font-weight="700">Toe box 鞋头空间</text>
+            <line x1="360" y1="285" x2="150" y2="205" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="30" y="198" font-weight="700">Vamp 前帮</text>
+            <line x1="575" y1="292" x2="930" y2="150" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="850" y="140" font-weight="700">Eyestay 鞋眼片</text>
+            <line x1="505" y1="220" x2="620" y2="90" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="595" y="80" font-weight="700">Tongue 鞋舌</text>
+            <line x1="720" y1="250" x2="930" y2="235" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="862" y="225" font-weight="700">Collar 鞋领</text>
+            <line x1="750" y1="300" x2="1000" y2="315" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="885" y="305" font-weight="700">Heel counter 后跟支撑</text>
+            <line x1="505" y1="385" x2="320" y2="520" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="240" y="538" font-weight="700">Midsole 中底</text>
+            <line x1="620" y1="455" x2="765" y2="525" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="738" y="540" font-weight="700">Outsole 外底</text>
+            <line x1="830" y1="438" x2="985" y2="500" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="885" y="518" font-weight="700">Tread 底纹</text>
+            <line x1="455" y1="420" x2="170" y2="465" stroke="#172026" stroke-width="2" marker-end="url(#arrow)"></line>
+            <text x="35" y="480" font-weight="700">Strobel / Insole 内部底层</text>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section id="terms">
+      <h2>核心术语词典</h2>
+      <p class="section-intro">以下是从原学习包中压缩到 HTML 首屏可查的高频词。完整 165 个词条保留在 Markdown 文件中；本页优先展示设计入门最常用部分。</p>
+      <div class="grid">
+        <div class="tile">
+          <strong>结构高频词</strong>
+          <span class="tag">Upper 鞋面</span><span class="tag">Vamp 前帮</span><span class="tag">Quarter 腰片</span><span class="tag">Toe box 鞋头空间</span><span class="tag">Eyestay 鞋眼片</span><span class="tag">Tongue 鞋舌</span><span class="tag">Collar 鞋领</span><span class="tag">Heel counter 后跟支撑</span><span class="tag">Sockliner 鞋垫</span><span class="tag">Midsole 中底</span><span class="tag">Outsole 外底</span><span class="tag">Tread 底纹</span>
+        </div>
+        <div class="tile">
+          <strong>材料高频词</strong>
+          <span class="tag">Mesh 网布</span><span class="tag">Knit 针织</span><span class="tag">Suede 麂皮</span><span class="tag">Leather 真皮</span><span class="tag">Synthetic leather 合成革</span><span class="tag">TPU film TPU薄膜</span><span class="tag">EVA</span><span class="tag">PU</span><span class="tag">PEBA</span><span class="tag">Rubber 橡胶</span><span class="tag">Carbon plate 碳板</span>
+        </div>
+        <div class="tile">
+          <strong>工艺高频词</strong>
+          <span class="tag">Cutting 裁断</span><span class="tag">Skiving 片皮</span><span class="tag">Stitching 车缝</span><span class="tag">Heat press 热压</span><span class="tag">HF welding 高频</span><span class="tag">Lasting 楦制</span><span class="tag">Strobel</span><span class="tag">Cementing 刷胶</span><span class="tag">Sole pressing 压底</span><span class="tag">Vulcanization 硫化</span>
+        </div>
+      </div>
+
+      <h3>材料、工艺、性能速查</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>类别</th><th>术语</th><th>设计判断</th></tr></thead>
+          <tbody>
+            <tr><td>鞋面材料</td><td>Engineered mesh 工程网布</td><td>适合跑鞋，能在不同区域做透气、支撑和减重变化。</td></tr>
+            <tr><td>鞋面材料</td><td>Suede 麂皮</td><td>复古鞋常用，质感强但需关注色牢度、耐脏和保养。</td></tr>
+            <tr><td>鞋面材料</td><td>Microfiber 超纤</td><td>比天然皮更稳定，常用于补强、鞋眼片和高磨耗区域。</td></tr>
+            <tr><td>补强材料</td><td>TPU film / Hot melt film</td><td>适合无缝热贴，能减重并保持支撑。</td></tr>
+            <tr><td>中底材料</td><td>EVA / CMEVA</td><td>轻、成本友好，常见于复古跑鞋和大众运动鞋。</td></tr>
+            <tr><td>中底材料</td><td>PEBA</td><td>更偏高回弹和轻量，常见于竞速产品语境。</td></tr>
+            <tr><td>外底材料</td><td>Rubber 橡胶</td><td>耐磨抓地，但会增加重量；薄底赛车鞋常只在磨耗区使用。</td></tr>
+            <tr><td>鞋面工艺</td><td>Stitching 车缝</td><td>连接可靠、复古感强，但会增加线迹、工序和局部厚度。</td></tr>
+            <tr><td>鞋面工艺</td><td>No-sew bonding 无缝贴合</td><td>适合轻量现代跑鞋，外观干净，但对材料和热压参数要求高。</td></tr>
+            <tr><td>成型工艺</td><td>Strobel construction</td><td>运动鞋常见，脚感更柔和，适合跑鞋和训练鞋。</td></tr>
+            <tr><td>底部工艺</td><td>Cold cement construction 冷粘</td><td>运动鞋常见帮底结合方式，需关注打磨、处理剂、刷胶和压底。</td></tr>
+            <tr><td>底部工艺</td><td>Vulcanization 硫化</td><td>常见于帆布鞋、胶底复古鞋，胶边和围条视觉明显。</td></tr>
+            <tr><td>性能</td><td>Cushioning 缓震</td><td>主要看中底材料、厚度、几何和鞋垫。</td></tr>
+            <tr><td>性能</td><td>Stability 稳定</td><td>主要看底宽、后跟杯、中腰支撑片、鞋面包裹。</td></tr>
+            <tr><td>性能</td><td>Traction 抓地</td><td>主要看橡胶配方、接地面积、底纹方向和深度。</td></tr>
+            <tr><td>品控</td><td>Bond strength 粘合强度</td><td>帮底结合核心指标之一，和材料处理、胶水、压合有关。</td></tr>
+            <tr><td>品控</td><td>Abrasion resistance 耐磨</td><td>外底、鞋头、内里高频测试方向。</td></tr>
+            <tr><td>品控</td><td>Colour fastness 色牢度</td><td>麂皮、织物、内里都需关注掉色和迁移风险。</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="plan">
+      <h2>4周速成计划</h2>
+      <div class="week-grid">
+        <div class="week">
+          <h3>第1周：结构</h3>
+          <p>学习 upper、midsole、outsole、vamp、quarter、toe box、heel counter、tongue、collar。完成 3 双鞋结构标注。</p>
+        </div>
+        <div class="week">
+          <h3>第2周：材料</h3>
+          <p>学习 mesh、knit、suede、leather、TPU film、EVA、PU、PEBA、rubber。完成材料观察卡和 BOM 草稿。</p>
+        </div>
+        <div class="week">
+          <h3>第3周：工艺</h3>
+          <p>学习 cutting、stitching、heat press、lasting、Strobel、cementing、vulcanization、injection molding。画生产流程图。</p>
+        </div>
+        <div class="week">
+          <h3>第4周：应用</h3>
+          <p>整理术语词典，分析 1 双真实鞋款，输出结构、材料、工艺、性能和成本点报告。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="templates">
+      <h2>练习模板</h2>
+      <h3>拆鞋观察表</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>项目</th><th>记录内容</th></tr></thead>
+          <tbody>
+            <tr><td>鞋款/用途</td><td>跑步 / 篮球 / 训练 / 休闲 / 户外 / 竞速</td></tr>
+            <tr><td>鞋面主材</td><td>mesh / knit / suede / leather / synthetic leather / microfiber</td></tr>
+            <tr><td>鞋面支撑</td><td>overlay / TPU film / eyestay / heel counter / webbing / strap</td></tr>
+            <tr><td>鞋头设计</td><td>toe box volume / toe bumper / mudguard / toe spring</td></tr>
+            <tr><td>中底</td><td>EVA / TPU / PEBA / PU；厚度；软硬；是否有 plate 或 shank</td></tr>
+            <tr><td>外底</td><td>rubber / TPR；tread pattern；lug 深度；耐磨区域</td></tr>
+            <tr><td>成型判断</td><td>Strobel / board lasting / cold cement / vulcanized / injection</td></tr>
+            <tr><td>性能定位</td><td>cushioning / stability / traction / breathability / durability</td></tr>
+            <tr><td>成本点推测</td><td>材料、工艺、模具、辅料、LOGO、复杂拼接、测试要求</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>BOM 基础字段</h3>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>部位</th><th>英文部位</th><th>材料</th><th>颜色/规格</th><th>工艺</th><th>备注</th></tr></thead>
+          <tbody>
+            <tr><td>鞋面主材</td><td>Upper main material</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>前帮</td><td>Vamp</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>鞋眼片</td><td>Eyestay</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>鞋舌</td><td>Tongue</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>内里</td><td>Lining</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>后跟支撑</td><td>Heel counter</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>鞋垫</td><td>Sockliner</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>中底</td><td>Midsole</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>外底</td><td>Outsole</td><td></td><td></td><td></td><td></td></tr>
+            <tr><td>鞋带</td><td>Lace</td><td></td><td></td><td></td><td></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="sources">
+      <h2>公开资料来源</h2>
+      <p class="section-intro">用于核对术语和测试/工艺方向。不同品牌和工厂可能有自己的叫法，实际开发以 tech pack、BOM 和供应商确认口径为准。</p>
+      <ul>
+        <li><a href="https://fdra.org/key-issues-and-advocacy/footwear-customs/key-footwear-definitions/">FDRA: Key Footwear Definitions</a></li>
+        <li><a href="https://www.nike.com/a/parts-of-shoe-anatomy">Nike: Shoe Anatomy 101</a></li>
+        <li><a href="https://www.runningwarehouse.com/learningcenter/gear_guides/footwear/shoe-components.html">Running Warehouse: Understanding Running Shoe Components & Terminology</a></li>
+        <li><a href="https://new.satra.com/services/test-methods/test-method-list/">SATRA: Test Method List</a></li>
+        <li><a href="https://www.satra.com/bulletin/article.php?id=1084">SATRA: Sole Abrasion Resistance</a></li>
+        <li><a href="https://shoemakersacademy.com/shoe-lasting/">Shoemakers Academy: Shoe Lasting</a></li>
+        <li><a href="https://shoemakersacademy.com/cold-cement-vs-vulcanized-shoe-construction/">Shoemakers Academy: Cold Cement vs Vulcanized Shoe Construction</a></li>
+        <li><a href="https://shoemakersacademy.com/outsole-cementing/">Shoemakers Academy: Outsole Cementing</a></li>
+        <li><a href="https://amorimcorksolutions.com/en-us/materials-applications/footwear/knowledge-center/glossary/">Amorim Cork Solutions: Footwear Glossary</a></li>
+      </ul>
+    </section>
+  </main>
+
+  <footer>
+    <p>生成日期：2026-07-07。图片为教学用途的无品牌渲染拆解图；术语以公开资料和鞋类开发通用表达整理。</p>
+  </footer>
+</body>
+</html>
